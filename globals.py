@@ -1,5 +1,5 @@
 # All global variables
-import pygame
+import pygame, board
 
 # The display setting
 ScreenW = 500
