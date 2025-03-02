@@ -14,3 +14,9 @@ game = True
 
 # The board
 GameBoard = board.board()
+
+# The player tokens
+WhiteUnplayed = 9
+BlackUnplayed = 9
+WhiteTaken = 0
+BlackTaken = 0
