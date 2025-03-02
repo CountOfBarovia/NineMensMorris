@@ -11,3 +11,6 @@ BlackHalf = pygame.rect.Rect(ScreenW / 2, 0, ScreenW / 2, ScreenH)
 # The run variables
 turn = 0
 game = True
+
+# The board
+GameBoard = board.board()
