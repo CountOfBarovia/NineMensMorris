@@ -26,6 +26,7 @@ class board:
         self.col = (255, 227, 191)
         self.pointcol = (71, 45, 18)
     
+    # Subroutine to display the board
     def display(self):
         # The base rect
         pygame.draw.rect(globals.Screen, self.col, self.rect)
@@ -37,9 +38,34 @@ class board:
         pygame.draw.line(globals.Screen, self.pointcol, self.actualpoints[0][5], self.actualpoints[2][5], 5)
         pygame.draw.line(globals.Screen, self.pointcol, self.actualpoints[0][7], self.actualpoints[2][7], 5)
         pygame.draw.line(globals.Screen, self.pointcol, self.actualpoints[0][3], self.actualpoints[2][3], 5)
+        # Draw the counters
         for i in range(len(self.contents)):
             for j in range(len(self.contents[i])):
                 if self.contents[i][j] == 1:
-                    pygame.draw.circle(globals.Screen, (255, 255, 255), self.actualpoints[i][j], 15)
+                    pygame.draw.circle(globals.Screen, (255, 248, 220), self.actualpoints[i][j], 15)
                 if self.contents[i][j] == 2:
-                    pygame.draw.circle(globals.Screen, (0, 0, 0), self.actualpoints[i][j], 15)
+                    pygame.draw.circle(globals.Screen, (77, 55, 55), self.actualpoints[i][j], 15)
+    
+    # Subroutine to check for any rows of three after a token is moved
+    def check(self, moved: tuple[int]) -> bool:
+            if moved[1] == 0: return False
+            if moved[1] % 2 != 0:
+                if self.contents[0][moved[1]] == self.contents[1][moved[1]] and self.contents[0][moved[1]] == self.contents[2][moved[1]]:
+                    return True
+                if moved[1] != 7:
+                    if self.contents[moved[0]][moved[1] - 1] == self.contents[moved[0]][moved[1]] and self.contents[moved[0]][moved[1]] == self.contents[moved[0]][moved[1] + 1]:
+                        return True
+                else:
+                    if self.contents[moved[0]][moved[1] - 1] == self.contents[moved[0]][moved[1]] and self.contents[moved[0]][moved[1]] == self.contents[moved[0]][0]:
+                        return True
+            else:
+                if moved[1] == 0:
+                    if (self.contents[moved[0]][6] == self.contents[moved[0]][moved[1]] and self.contents[moved[0]][7] == self.contents[moved[0]][moved[1]]) or (self.contents[moved[0]][moved[1] + 2] == self.contents[moved[0]][moved[1]] and self.contents[moved[0]][moved[1] + 1] == self.contents[moved[0]][moved[1]]):
+                        return True
+                if moved[1] == 6:
+                    if (self.contents[moved[0]][moved[1] - 2] == self.contents[moved[0]][moved[1]] and self.contents[moved[0]][moved[1] - 1] == self.contents[moved[0]][moved[1]]) or (self.contents[moved[0]][0] == self.contents[moved[0]][0] and self.contents[moved[0]][moved[1] + 1] == self.contents[moved[0]][moved[1]]):
+                        return True
+                else:
+                    if (self.contents[moved[0]][moved[1] - 2] == self.contents[moved[0]][moved[1]] and self.contents[moved[0]][moved[1] - 1] == self.contents[moved[0]][moved[1]]) or (self.contents[moved[0]][moved[1] + 2] == self.contents[moved[0]][moved[1]] and self.contents[moved[0]][moved[1] + 1] == self.contents[moved[0]][moved[1]]):
+                        return True
+            return False
