@@ -7,16 +7,16 @@ ScreenH = 500
 Screen = pygame.display.set_mode((ScreenW, ScreenH))
 WhiteHalf = pygame.rect.Rect(0, 0, ScreenW / 2, ScreenH)
 BlackHalf = pygame.rect.Rect(ScreenW / 2, 0, ScreenW / 2, ScreenH)
+mousecoll = pygame.rect.Rect(pygame.mouse.get_pos(), (1, 1))
 
 # The run variables
-turn = 0
+turn = 1
 game = True
+selected = (0, 0)
 
 # The board
 GameBoard = board.board()
 
 # The player tokens
-WhiteUnplayed = 9
-BlackUnplayed = 9
-WhiteTaken = 0
-BlackTaken = 0
+Unplayed = [9, 9]
+Taken = [0, 0]

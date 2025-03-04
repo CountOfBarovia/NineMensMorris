@@ -18,10 +18,14 @@ class board:
                         (self.side / 14 * 9, self.side / 14 * 9), (self.side / 2, self.side / 14 * 9), (self.side / 14 * 5, self.side / 14 * 9),
                         (self.side / 14 * 5, self.side / 2)]]
         self.offset = (globals.ScreenW - self.side) / 2
-        self.actualpoints = self.relpoints
+        self.actualpoints = self.relpoints.copy()
         for square in range(len(self.actualpoints)):
             for point in range(len(self.actualpoints[square])):
                 self.actualpoints[square][point] = (self.actualpoints[square][point][0] + self.offset, self.actualpoints[square][point][1] + self.offset)
+        self.pointcollboxes = [[self.actualpoints[i][j] for j in range(8)] for i in range(3)]
+        for square in range(len(self.actualpoints)):
+            for point in range(len(self.actualpoints[square])):
+                self.pointcollboxes[square][point] = pygame.rect.Rect(self.actualpoints[square][point][0] - 15, self.actualpoints[square][point][1] - 15, 30, 30)
         self.rect = pygame.rect.Rect(self.offset, self.offset, self.side, self.side)
         self.col = (255, 227, 191)
         self.pointcol = (71, 45, 18)
@@ -45,6 +49,17 @@ class board:
                     pygame.draw.circle(globals.Screen, (255, 248, 220), self.actualpoints[i][j], 15)
                 if self.contents[i][j] == 2:
                     pygame.draw.circle(globals.Screen, (77, 55, 55), self.actualpoints[i][j], 15)
+        # Check if the mouse is hovering over any space
+        k = 0
+        l = 0
+        for i in self.pointcollboxes:
+            for j in i:
+                pos = pygame.mouse.get_pos()
+                if pos[0] > j.left and pos[0] < j.right and pos[1] > j.top and pos[1] < j.bottom:
+                    return (k, l)
+                l += 1
+            l = 0
+            k += 1
     
     # Subroutine to check for any rows of three after a token is moved
     def check(self, moved: tuple[int]) -> bool:
