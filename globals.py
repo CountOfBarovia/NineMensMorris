@@ -10,9 +10,11 @@ BlackHalf = pygame.rect.Rect(ScreenW / 2, 0, ScreenW / 2, ScreenH)
 mousecoll = pygame.rect.Rect(pygame.mouse.get_pos(), (1, 1))
 
 # The run variables
-turn = 1
+turn = 2
 game = True
 selected = (0, 0)
+remove = False
+pos = None
 
 # The board
 GameBoard = board.board()
