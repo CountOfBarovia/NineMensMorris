@@ -12,7 +12,7 @@ mousecoll = pygame.rect.Rect(pygame.mouse.get_pos(), (1, 1))
 # The run variables
 turn = 2
 game = True
-selected = (0, 0)
+selected = None
 remove = False
 pos = None
 
@@ -22,3 +22,4 @@ GameBoard = board.board()
 # The player tokens
 Unplayed = [9, 9]
 Taken = [0, 0]
+Lost = [6, 0]

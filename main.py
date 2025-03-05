@@ -14,8 +14,8 @@ while globals.game:
     pygame.draw.rect(globals.Screen, (255, 255, 255), globals.WhiteHalf)
     pygame.draw.rect(globals.Screen, (0, 0, 0), globals.BlackHalf)
     # Check if a row of three has just been made
-    if globals.pos != None: globals.remove = globals.GameBoard.check(globals.pos)
-    if not globals.remove:
+    if globals.pos != None and globals.selected == None: globals.remove = globals.GameBoard.check(globals.pos)
+    if (not globals.remove) and globals.selected == None:
             if globals.turn == 1: globals.turn = 2
             else: globals.turn = 1
     # Draw the tokens
@@ -31,6 +31,7 @@ while globals.game:
         pygame.draw.circle(globals.Screen, (77, 55, 55), (globals.ScreenW - 25, (globals.ScreenH - (total - 1) * 50) / 2 + i * 50), 15)
     for i in range(globals.Taken[1]):
         pygame.draw.circle(globals.Screen, (255, 248, 220), (globals.ScreenW - 25, (globals.ScreenH - (total - 1) * 50) / 2 + (i + globals.Unplayed[1]) * 50), 15)
+    globals.Lost = (globals.Taken[1], globals.Taken[0])
     # Update the screen
     globals.GameBoard.display()
     pygame.display.update()
