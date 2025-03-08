@@ -41,5 +41,21 @@ while globals.game:
             globals.game = False
     # Make a decision
     globals.pos = controls.select()
+    # Check for a winner
+    winner = 0
+    try:
+        winner = globals.Taken.index(7) + 1
+        globals.game = False
+    except:
+         pass
+
+if winner == 1:
+     globals.Screen.fill((255, 255, 255))
+     pygame.display.update()
+     pygame.time.wait(5000)
+if winner == 2:
+     globals.Screen.fill((0, 0, 0))
+     pygame.display.update()
+     pygame.time.wait(5000)
 
 pygame.quit()

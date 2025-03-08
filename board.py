@@ -45,10 +45,12 @@ class board:
         # Draw the counters
         for i in range(len(self.contents)):
             for j in range(len(self.contents[i])):
+                if globals.selected == (i, j): radius = 18
+                else: radius = 15
                 if self.contents[i][j] == 1:
-                    pygame.draw.circle(globals.Screen, (255, 248, 220), self.actualpoints[i][j], 15)
+                    pygame.draw.circle(globals.Screen, (255, 248, 220), self.actualpoints[i][j], radius)
                 if self.contents[i][j] == 2:
-                    pygame.draw.circle(globals.Screen, (77, 55, 55), self.actualpoints[i][j], 15)
+                    pygame.draw.circle(globals.Screen, (77, 55, 55), self.actualpoints[i][j], radius)
         # Check if the mouse is hovering over any space
         k = 0
         l = 0
@@ -56,6 +58,10 @@ class board:
             for j in i:
                 pos = pygame.mouse.get_pos()
                 if pos[0] > j.left and pos[0] < j.right and pos[1] > j.top and pos[1] < j.bottom:
+                    if self.contents[k][l] == 1 and ((globals.turn == 1 and not globals.remove and globals.selected == None and globals.Unplayed[globals.turn - 1] == 0) or (globals.turn == 2 and globals.remove and not globals.GameBoard.check((k, l)))):
+                        pygame.draw.circle(globals.Screen, (255, 248, 220), self.actualpoints[k][l], 18)
+                    if self.contents[k][l] == 2 and ((globals.turn == 2 and not globals.remove and globals.selected == None and globals.Unplayed[globals.turn - 1] == 0) or (globals.turn == 1 and globals.remove and not globals.GameBoard.check((k, l)))):
+                        pygame.draw.circle(globals.Screen, (77, 55, 55), self.actualpoints[k][l], 18)
                     return (k, l)
                 l += 1
             l = 0
@@ -63,11 +69,10 @@ class board:
     
     # Subroutine to check for any rows of three after a token is moved
     def check(self, moved: tuple[int]) -> bool:
-            if moved[1] == 0: return False
             if moved[1] % 2 != 0:
                 if self.contents[0][moved[1]] == self.contents[1][moved[1]] and self.contents[0][moved[1]] == self.contents[2][moved[1]]:
                     return True
-                if moved[1] != 7:
+                elif moved[1] != 7:
                     if self.contents[moved[0]][moved[1] - 1] == self.contents[moved[0]][moved[1]] and self.contents[moved[0]][moved[1]] == self.contents[moved[0]][moved[1] + 1]:
                         return True
                 else:
@@ -78,7 +83,7 @@ class board:
                     if (self.contents[moved[0]][6] == self.contents[moved[0]][moved[1]] and self.contents[moved[0]][7] == self.contents[moved[0]][moved[1]]) or (self.contents[moved[0]][moved[1] + 2] == self.contents[moved[0]][moved[1]] and self.contents[moved[0]][moved[1] + 1] == self.contents[moved[0]][moved[1]]):
                         return True
                 if moved[1] == 6:
-                    if (self.contents[moved[0]][moved[1] - 2] == self.contents[moved[0]][moved[1]] and self.contents[moved[0]][moved[1] - 1] == self.contents[moved[0]][moved[1]]) or (self.contents[moved[0]][0] == self.contents[moved[0]][0] and self.contents[moved[0]][moved[1] + 1] == self.contents[moved[0]][moved[1]]):
+                    if (self.contents[moved[0]][moved[1] - 2] == self.contents[moved[0]][moved[1]] and self.contents[moved[0]][moved[1] - 1] == self.contents[moved[0]][moved[1]]) or (self.contents[moved[0]][0] == self.contents[moved[0]][moved[1]] and self.contents[moved[0]][moved[1] + 1] == self.contents[moved[0]][moved[1]]):
                         return True
                 else:
                     if (self.contents[moved[0]][moved[1] - 2] == self.contents[moved[0]][moved[1]] and self.contents[moved[0]][moved[1] - 1] == self.contents[moved[0]][moved[1]]) or (self.contents[moved[0]][moved[1] + 2] == self.contents[moved[0]][moved[1]] and self.contents[moved[0]][moved[1] + 1] == self.contents[moved[0]][moved[1]]):

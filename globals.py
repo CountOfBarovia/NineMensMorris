@@ -22,4 +22,4 @@ GameBoard = board.board()
 # The player tokens
 Unplayed = [9, 9]
 Taken = [0, 0]
-Lost = [6, 0]
+Lost = [0, 0]
